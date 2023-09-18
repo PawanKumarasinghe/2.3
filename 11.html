@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Question 11 Vue Router Example</title>
+</head>
+<body>
+    <div id="app">
+        <router-view></router-view>
+    </div>
+
+    <!-- Include Vue.js and Vue Router libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+     <!-- Include Vue.js and Vue Router libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.js"></script>
+
+    <script>
+        // Import Vue and Vue Router
+        Vue.use(VueRouter);
+
+        // Create Vue components for each route
+        const Home = { template: '<div><h1>Home</h1><p>Welcome to the main  Page!</p></div>' }
+        //about us page
+        const About = { template: '<div><h1>About</h1><p>This is the About US Page.</p></div>' }
+        //contact us page
+        const Contact = { template: '<div><h1>Contact</h1><p>This is the contact us page .</p></div>' }
+
+        // Define routes
+        const routes = [
+            // Each route should map to a component. The "component" can
+            { path: '/', component: Home },
+            //about us page
+            { path: '/aboutus', component: About },
+            //contact us page
+            { path: '/contactus', component: Contact }
+        ]
+
+        // Create the router instance and pass the `routes` option
+        const router = new VueRouter({
+            routes
+        })
+
+        // Create and mount the root instance
+        new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+</body>
+</html>

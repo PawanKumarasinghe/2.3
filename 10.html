@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Components Example</title>
+    <!-- Include Vue.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>Vue.js Components Example</h2>
+        
+        <!-- main component -->
+        <parent-component :message="mainMessage">
+            <!-- Slot content -->
+            <p>This is some slot contents</p>
+        </parent-component>
+    </div>
+
+    <script>
+        // Child component definition
+        Vue.component('child-component', {
+            props: ['message'],
+            template: `
+                <div>
+                    
+                    <h3>Child Component</h3>
+                    <p>Received from parent: {{ message }}</p>
+                    <button @click="sendMessage">Send Message to Parent</button>
+                </div>
+            `,
+            methods: {
+                sendMessage: function() {
+                    // Send message to main component
+                    this.$emit('send-message', 'Hello from slave!');
+                }
+            }
+        });
+
+        // Parent component definition
+        new Vue({
+            el: '#app',
+            data: {
+                parentMessage: 'Hello from parent!',
+                receivedMessage: ''
+            },
+            methods: {
+                handleMessageFromChild: function(message) {
+                    // Handle the message received from the child component
+                    this.receivedMessage = message;
+                }
+            },
+            template: `
+                <div>
+                    <h2>Parent Component</h2>
+                    <p>{{ mainMessage }}</p>
+                    <child-component :message="parentMessage" @send-message="handleMessageFromChild">
+                        <!-- Slot content will be placed here -->
+                        <slot></slot>
+                    </child-component>
+                    <p>Message received from child: {{ receivedMessage }}</p>
+                </div>
+            `
+        });
+    </script>
+</body>
+</html>
